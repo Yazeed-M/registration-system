@@ -1,15 +1,12 @@
 package com.project.registration_system.components.user.entities;
 
-import java.util.List;
-
-import com.project.registration_system.components.course.entities.Course;
 import com.yahoo.elide.annotation.Include;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+
+@Entity
 @Include(name="user")
 public class User {
     @Id @GeneratedValue
@@ -18,16 +15,12 @@ public class User {
     private String email;
     private String password;
     
-    @ManyToMany(mappedBy="user", cascade = CascadeType.ALL)
-    private List<Course> courseList;
-    
     public User() {}
     
-    public User(Long id, String email, String password, List<Course> courseList) {
+    public User(Long id, String email, String password) {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.courseList = courseList;
     }
     
     public Long getId() {
@@ -53,13 +46,4 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public List<Course> getCourseList() {
-        return courseList;
-    }
-
-    public void setCourseList(List<Course> courseList) {
-        this.courseList = courseList;
-    }
-    
 }

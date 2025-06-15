@@ -1,14 +1,10 @@
 package com.project.registration_system.components.course.entities;
 
-import java.util.List;
-
-import com.project.registration_system.components.user.entities.User;
 import com.yahoo.elide.annotation.Include;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 
 @Entity()
 @Include(name= "course")
@@ -18,17 +14,13 @@ public class Course {
 
     private String courseName;
     private String courseCode;
-
-    @ManyToMany(mappedBy="Courses")
-    private List<User> users ;
     
     public Course(){}
 
-    public Course(Long id, String courseName, String courseCode, List<User> users) {
+    public Course(Long id, String courseName, String courseCode) {
         this.id = id;
         this.courseName = courseName;
         this.courseCode = courseCode;
-        this.users = users;
     }
     
     public Long getId() {
@@ -38,15 +30,7 @@ public class Course {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-    
+      
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
