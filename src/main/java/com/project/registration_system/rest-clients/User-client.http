@@ -10,3 +10,17 @@ Content-Type: application/vnd.api+json
     }
   }
 }
+
+###
+GET http://localhost:8080/api/v1/user
+
+###
+POST http://localhost:8080/api/v1/student/create-user
+Content-Type: application/json
+
+{
+  "name":"yazeed",
+  "password":"yazeed",
+  "courseCode":["444","434","441"],
+  "courseName":["c","a","b"]
+}
