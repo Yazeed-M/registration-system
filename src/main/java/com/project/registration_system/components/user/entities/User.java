@@ -9,9 +9,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-
-@Entity()
+import jakarta.persistence.ManyToMany;
 @Include(name="user")
 public class User {
     @Id @GeneratedValue
@@ -20,7 +18,7 @@ public class User {
     private String email;
     private String password;
     
-    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy="user", cascade = CascadeType.ALL)
     private List<Course> courseList;
     
     public User() {}
