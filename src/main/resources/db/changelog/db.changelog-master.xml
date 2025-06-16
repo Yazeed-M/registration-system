@@ -7,4 +7,6 @@
     <include file="file:src/main/resources/db/changelog/create-user-table.xml" />
     <include file="file:src/main/resources/db/changelog/create-course-table.xml" />
     <include file="file:src/main/resources/db/changelog/create-user_courses-table.xml" />
+    <include file="file:src/main/resources/db/changelog/rename-course-column.xml" />
+    <include file="file:src/main/resources/db/changelog/rename-user-course-columns.xml" />
 </databaseChangeLog>

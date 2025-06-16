@@ -1,8 +1,5 @@
     package com.project.registration_system.components.user.services;
 
-    import java.util.HashMap;
-    import java.util.List;
-
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.HttpStatus;
     import org.springframework.http.ResponseEntity;
@@ -12,14 +9,15 @@
 
     import com.project.registration_system.components.user.entities.User;
     import com.project.registration_system.components.user.repository.UserRepository;
+import com.project.registration_system.dtos.MessageDto;
 
     @Service
     public class UserService {
         @Autowired
         private final RestTemplate restTemplate;
         private final UserRepository repo;
-        private final KafkaTemplate<String, Object> kafkaTemplate;
-        public UserService(UserRepository repo, KafkaTemplate<String, Object> kafkaTemplate, RestTemplate restTemplate){
+        private final KafkaTemplate<String, MessageDto> kafkaTemplate;
+        public UserService(UserRepository repo, KafkaTemplate<String, MessageDto> kafkaTemplate, RestTemplate restTemplate){
             this.repo=repo;
             this.kafkaTemplate = kafkaTemplate;
             this.restTemplate=restTemplate;
@@ -31,11 +29,7 @@
             user.setPassword(password);
             User saved=this.repo.save(user);
             if(saved != null){
-            HashMap<String, Object> kafkaMessage = new HashMap<>();
-
-            kafkaMessage.put("courseCode", courseCode);
-            kafkaMessage.put("courseList", courseList);
-            kafkaMessage.put("userId", saved.getId());
+            MessageDto kafkaMessage = new MessageDto(courseCode, courseList, saved.getId());
 
                 this.kafkaTemplate.send("user-created", kafkaMessage);
             }

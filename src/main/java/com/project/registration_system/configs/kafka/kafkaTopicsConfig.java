@@ -11,4 +11,5 @@ public class kafkaTopicsConfig {
     public NewTopic topic() {
         return TopicBuilder.name("user-created").build();
     }
+    
 }
