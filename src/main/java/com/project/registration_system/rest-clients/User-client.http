@@ -1,0 +1,35 @@
+POST http://localhost:8080/api/v1/user 
+Content-Type: application/vnd.api+json
+
+{
+  "data": {
+    "type": "user",
+    "attributes": {
+      "name": "yazeedj@gmail",
+      "password": "password"
+    }
+  }
+}
+
+###
+GET http://localhost:8080/api/v1/user
+
+###
+POST http://localhost:8080/api/v1/private/create-user
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5YXplZWRqQGdtYWlsIiwiaWF0IjoxNzUwMDg1NjA1LCJleHAiOjE3NTAwODkyMDV9._4cG_gffdtvAwd71PwD14Az-QctF3vC6CuapBAceS3w
+
+{
+  "name":"mohammad",
+  "password":"mohammad",
+  "courseCode":"444",
+  "courseName":"Software requirements "
+}
+###
+POST http://localhost:8080/api/v1/login
+Content-Type: application/json
+
+{
+  "name":"yazeedj@gmail",
+  "password":"password"
+}

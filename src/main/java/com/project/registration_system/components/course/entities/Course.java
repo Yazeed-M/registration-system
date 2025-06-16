@@ -2,17 +2,21 @@ package com.project.registration_system.components.course.entities;
 
 import com.yahoo.elide.annotation.Include;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity()
 @Include(name= "course")
 public class Course {
-    @Id @GeneratedValue
+    @Id 
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-
+    @Column(name = "courseName")
     private String courseName;
+    @Column(name = "courseCode")
     private String courseCode;
     
     public Course(){}

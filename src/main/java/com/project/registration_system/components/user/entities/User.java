@@ -4,22 +4,25 @@ import com.yahoo.elide.annotation.Include;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 @Include(name="user")
+// @CreatePermission(expression = "Prefab.ALL")
 public class User {
-    @Id @GeneratedValue
+    @Id 
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    private String email;
+    private String name;
     private String password;
     
     public User() {}
     
-    public User(Long id, String email, String password) {
+    public User(Long id, String name, String password) {
         this.id = id;
-        this.email = email;
+        this.name = name;
         this.password = password;
     }
     
@@ -31,12 +34,12 @@ public class User {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getName() {
+        return name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
