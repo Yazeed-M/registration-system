@@ -15,12 +15,21 @@ Content-Type: application/vnd.api+json
 GET http://localhost:8080/api/v1/user
 
 ###
-POST http://localhost:8080/api/v1/student/create-user
+POST http://localhost:8080/api/v1/private/create-user
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5YXplZWRqQGdtYWlsIiwiaWF0IjoxNzUwMDczNTMyLCJleHAiOjE3NTAwNzcxMzJ9.5vWYty3JrSuJnrwgv9aicEqIfVoJeZUqfH22ligtPks
 
 {
   "name":"yazeed",
-  "password":"yazeed",
-  "courseCode":["444","434","441"],
-  "courseName":["c","a","b"]
+  "password":"mohammad",
+  "courseCode":"444",
+  "courseName":"Software requirements "
+}
+###
+POST http://localhost:8080/api/v1/login
+Content-Type: application/json
+
+{
+  "name":"yazeedj@gmail",
+  "password":"password"
 }

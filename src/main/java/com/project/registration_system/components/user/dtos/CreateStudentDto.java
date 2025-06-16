@@ -1,12 +1,10 @@
 package com.project.registration_system.components.user.dtos;
 
-import java.util.List;
-
 public class CreateStudentDto {
     private String name;
     private String password;
-    private List<String> courseName;
-    private List<String> courseCode;
+    private String courseName;
+    private String courseCode;
 
     public String getName() {
         return name;
@@ -20,16 +18,16 @@ public class CreateStudentDto {
     public void setPassword(String password) {
         this.password = password;
     }
-    public List<String> getCourseName() {
+    public String getCourseName() {
         return courseName;
     }
-    public void setCourseName(List<String> courseName) {
+    public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
-    public List<String> getCourseCode() {
+    public String getCourseCode() {
         return courseCode;
     }
-    public void setCourseCode(List<String> courseCode) {
+    public void setCourseCode(String courseCode) {
         this.courseCode = courseCode;
     }
 }
