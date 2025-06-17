@@ -9,7 +9,7 @@
 
     import com.project.registration_system.components.user.entities.User;
     import com.project.registration_system.components.user.repository.UserRepository;
-import com.project.registration_system.dtos.MessageDto;
+    import com.project.registration_system.dtos.MessageDto;
 
     @Service
     public class UserService {
@@ -17,6 +17,7 @@ import com.project.registration_system.dtos.MessageDto;
         private final RestTemplate restTemplate;
         private final UserRepository repo;
         private final KafkaTemplate<String, MessageDto> kafkaTemplate;
+
         public UserService(UserRepository repo, KafkaTemplate<String, MessageDto> kafkaTemplate, RestTemplate restTemplate){
             this.repo=repo;
             this.kafkaTemplate = kafkaTemplate;
@@ -24,6 +25,11 @@ import com.project.registration_system.dtos.MessageDto;
         }
 
         public void createStudent(String name, String password, String courseList, String courseCode){
+            User onDb= repo.findUserByName(name);
+            if(onDb != null){
+                handleExistentUsers(onDb, courseCode, courseList);
+            }
+            else{
             User user= new User();
             user.setName(name);
             user.setPassword(password);
@@ -36,6 +42,7 @@ import com.project.registration_system.dtos.MessageDto;
             else{
                 throw new IllegalArgumentException("could not save the user");
             }
+        }
         }
 
         @SuppressWarnings("empty-statement")
@@ -50,5 +57,9 @@ import com.project.registration_system.dtos.MessageDto;
                 }
             }
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");            
+        }
+        private void handleExistentUsers(User user, String courseName, String courseCode){
+            MessageDto kafkaMessage = new MessageDto(courseCode, courseName, user.getId());
+            this.kafkaTemplate.send("user-created", kafkaMessage);
         }
     }
