@@ -1,6 +1,3 @@
-user creates an authenticated account then creates users.
-need to check if the user is authenticated to create users.
-when the user is created an event will fire
 
 Base:
 Mysql DB
