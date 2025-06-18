@@ -1,4 +1,4 @@
-package com.project.registration_system.dtos;
+package com.project.registration_system.components.user.dtos;
 
 public class MessageDto {
         private String courseCode;

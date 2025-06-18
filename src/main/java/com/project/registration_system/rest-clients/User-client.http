@@ -17,13 +17,13 @@ GET http://localhost:8080/api/v1/user
 ###
 POST http://localhost:8080/api/v1/private/create-user
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5YXplZWRqQGdtYWlsIiwiaWF0IjoxNzUwMTY4OTYyLCJleHAiOjE3NTAxNzI1NjJ9.7wUngzD8TW1znqRUbISHLvXh_QvHrQPqVdrWKFSID7A
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5YXplZWRqQGdtYWlsIiwiaWF0IjoxNzUwMjQwODg5LCJleHAiOjE3NTAyNDQ0ODl9.Wv_vuKEIQsiw8X0a8WvsXccT-JMf4Qy9ehzqid8oVU8
 
 {
-  "name":"fa",
-  "password":"mohammad",
-  "courseCode":"swssjoid",
-  "courseName":"pwokd"
+  "name":"kjdw",
+  "password":"dkjwqn",
+  "courseCode":"mmmmm",
+  "courseName":"kkkkk"
 }
 ###
 POST http://localhost:8080/api/v1/login
