@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class User_Notifications {
+public class User_Notification {
     @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     
@@ -14,9 +14,9 @@ public class User_Notifications {
     private String course_name;
     private String user_name;
     
-    public User_Notifications(){}
+    public User_Notification(){}
 
-    public User_Notifications(Long id, String notification_body, String course_name, String user_name) {
+    public User_Notification(Long id, String notification_body, String course_name, String user_name) {
         this.id = id;
         this.notification_body = notification_body;
         this.course_name = course_name;

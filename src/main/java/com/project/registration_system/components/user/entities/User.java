@@ -1,15 +1,20 @@
 package com.project.registration_system.components.user.entities;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import com.yahoo.elide.annotation.Include;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 
 @Entity
 @Include(name="user")
-// @CreatePermission(expression = "Prefab.ALL")
+// @CreatePermission(expression = "allow all")
+// @ReadPermission(expression = "allow all")
 public class User {
     @Id 
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -26,6 +31,15 @@ public class User {
         this.password = password;
     }
     
+    @PrePersist
+    @PreUpdate
+    private void hashPassword() {
+        if (password != null && !password.startsWith("$2a$")) { // already hashed check
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            this.password = encoder.encode(password);
+        }
+    }
+
     public Long getId() {
         return id;
     }

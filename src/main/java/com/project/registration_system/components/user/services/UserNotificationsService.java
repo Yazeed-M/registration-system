@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.project.registration_system.components.user.dtos.UserNotificationsDto;
 import com.project.registration_system.components.user.entities.User;
-import com.project.registration_system.components.user.entities.User_Notifications;
-import com.project.registration_system.components.user.repository.UserNotificationsRepository;
+import com.project.registration_system.components.user.entities.User_Notification;
+import com.project.registration_system.components.user.repository.UserNotificationRepository;
 import com.project.registration_system.components.user.repository.UserRepository;
 
 @Service
@@ -17,8 +17,8 @@ public class UserNotificationsService {
 
     @Autowired
     private final UserRepository userRepository;
-    private final UserNotificationsRepository userNotificationsRepository;
-    public UserNotificationsService(com.project.registration_system.components.user.repository.UserRepository userRepository, UserNotificationsRepository userNotificationsRepository) {
+    private final UserNotificationRepository userNotificationsRepository;
+    public UserNotificationsService(com.project.registration_system.components.user.repository.UserRepository userRepository, UserNotificationRepository userNotificationsRepository) {
         this.userRepository = userRepository;
         this.userNotificationsRepository = userNotificationsRepository;
     }
@@ -29,7 +29,7 @@ public class UserNotificationsService {
             Optional<User> user = userRepository.findById(message.getUser_id());
             if (user.isPresent()) {
                 String username=  user.get().getName();
-                User_Notifications record = new User_Notifications();
+                User_Notification record = new User_Notification();
                 String notificationBody = username + "has been added to course: "+ message.getCourse_name();
                 record.setNotification_body(notificationBody);
                 record.setCourse_name(message.getCourse_name());

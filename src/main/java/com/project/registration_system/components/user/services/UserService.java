@@ -7,6 +7,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -57,8 +58,8 @@ public class UserService {
     public ResponseEntity<?> login(String name, String password) {
         User user = repo.findUserByName(name);
         if (user != null) {
-            Boolean matchPassword = (user.getPassword().equals(password));
-            if (matchPassword) {
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            if (encoder.matches(password, user.getPassword())) {
                 String url = "http://localhost:8082/api/auth/" + name;
                 ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
                 return response;
