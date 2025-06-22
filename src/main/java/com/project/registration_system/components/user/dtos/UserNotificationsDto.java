@@ -21,4 +21,7 @@ public class UserNotificationsDto {
     public void setUser_id(Long user_id) {
         this.user_id = user_id;
     }
+    public boolean isValid(){
+        return course_name !=null && user_id != null;
+    }
 }

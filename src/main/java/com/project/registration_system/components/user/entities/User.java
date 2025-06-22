@@ -12,27 +12,28 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 
 @Entity
-@Include(name="user")
-// @CreatePermission(expression = "allow all")
-// @ReadPermission(expression = "allow all")
+@Include(name = "user")
 public class User {
-    @Id 
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private String password;
-    
-    public User() {}
-    
+
+    public User() {
+    }
+
     public User(Long id, String name, String password) {
         this.id = id;
         this.name = name;
         this.password = password;
     }
-    
+
     @PrePersist
     @PreUpdate
+    @SuppressWarnings("unused")
     private void hashPassword() {
         if (password != null && !password.startsWith("$2a$")) { // already hashed check
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
