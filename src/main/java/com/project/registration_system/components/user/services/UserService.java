@@ -1,65 +1,71 @@
-    package com.project.registration_system.components.user.services;
+package com.project.registration_system.components.user.services;
 
-    import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.http.HttpStatus;
-    import org.springframework.http.ResponseEntity;
-    import org.springframework.kafka.core.KafkaTemplate;
-    import org.springframework.stereotype.Service;
-    import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
-    import com.project.registration_system.components.user.entities.User;
-    import com.project.registration_system.components.user.repository.UserRepository;
-    import com.project.registration_system.dtos.MessageDto;
+import com.project.registration_system.apis.internal_apis.AuthApis;
+import com.project.registration_system.components.user.dtos.CreateStudentDto;
+import com.project.registration_system.components.user.dtos.MessageDto;
+import com.project.registration_system.components.user.entities.User;
+import com.project.registration_system.components.user.repository.UserRepository;
 
-    @Service
-    public class UserService {
-        @Autowired
-        private final RestTemplate restTemplate;
-        private final UserRepository repo;
-        private final KafkaTemplate<String, MessageDto> kafkaTemplate;
+@Service
+public class UserService {
 
-        public UserService(UserRepository repo, KafkaTemplate<String, MessageDto> kafkaTemplate, RestTemplate restTemplate){
-            this.repo=repo;
-            this.kafkaTemplate = kafkaTemplate;
-            this.restTemplate=restTemplate;
-        }
+    @Autowired
+    private final UserRepository repo;
+    private final KafkaTemplate<String, MessageDto> kafkaTemplate;
+    private final AuthApis authInternalApi;
+    public UserService(UserRepository repo, KafkaTemplate<String, MessageDto> kafkaTemplate, AuthApis authInternalApi) {
+        this.repo = repo;
+        this.kafkaTemplate = kafkaTemplate;
+        this.authInternalApi = authInternalApi;
+    }
 
-        public void createStudent(String name, String password, String courseList, String courseCode){
-            User onDb= repo.findUserByName(name);
-            if(onDb != null){
-                handleExistentUsers(onDb, courseCode, courseList);
-            }
-            else{
-            User user= new User();
-            user.setName(name);
-            user.setPassword(password);
-            User saved=this.repo.save(user);
-            if(saved != null){
-            MessageDto kafkaMessage = new MessageDto(courseCode, courseList, saved.getId());
+    public void createStudent(CreateStudentDto createStudentDto) {
 
-                this.kafkaTemplate.send("user-created", kafkaMessage);
-            }
-            else{
-                throw new IllegalArgumentException("could not save the user");
-            }
-        }
-        }
+        User onDb = repo.findUserByName(createStudentDto.getName());
+        if (onDb != null) {
+            handleExistentUsers(onDb, createStudentDto.getCourseName(), createStudentDto.getCourseCode());
+        } else {
+            User user = new User();
+            user.setName(createStudentDto.getName());
+            user.setPassword(createStudentDto.getPassword());
+            User saved = this.repo.save(user);
 
-        @SuppressWarnings("empty-statement")
-        public ResponseEntity<?> login(String name, String password){           
-            User user = repo.findUserByName(name);
-            if(user != null){
-                Boolean matchPassword= (user.getPassword().equals(password));
-                if(matchPassword){
-                String url= "http://localhost:8080/api/auth/"+name;
-                ResponseEntity<?> response = restTemplate.getForEntity(url, String.class);
-                return response;
-                }
-            }
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");            
-        }
-        private void handleExistentUsers(User user, String courseName, String courseCode){
-            MessageDto kafkaMessage = new MessageDto(courseCode, courseName, user.getId());
-            this.kafkaTemplate.send("user-created", kafkaMessage);
+            MessageDto payload = new MessageDto();
+
+            payload.setCourseCode(createStudentDto.getCourseCode());
+            payload.setCourseName(createStudentDto.getCourseName());
+            payload.setUserId(saved.getId());
+
+            this.kafkaTemplate.send("user-created", payload);
         }
     }
+
+    @SuppressWarnings("empty-statement")
+    public ResponseEntity<?> login(String name, String password
+    ) {
+        User user = repo.findUserByName(name);
+        if (user != null) {
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            if (encoder.matches(password, user.getPassword())) {
+                return authInternalApi.authenticationServiceApis(name, "/api/auth/");
+            }
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
+    }
+
+    private void handleExistentUsers(User user, String courseName, String courseCode) {
+        MessageDto payload = new MessageDto();
+        payload.setCourseCode(courseCode);
+        payload.setCourseName(courseName);
+        payload.setUserId(user.getId());
+
+        this.kafkaTemplate.send("user-created", payload);
+    }
+}

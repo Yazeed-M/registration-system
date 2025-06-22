@@ -3,18 +3,19 @@
     <changeSet author="Yazeed" id="create-user-table">
             <preConditions onFail="MARK_RAN">
                  <not>
-                     <tableExists tableName="course"/>
+                     <tableExists tableName="user_notification"/>
                 </not>
             </preConditions>
-        <createTable tableName="course">
+        <createTable tableName="user_notification">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="courseName" type="VARCHAR(255)"/>
-            <column name="courseCode" type="VARCHAR(255)"/>
+            <column name="notification_body" type="VARCHAR(255)"/>
+            <column name="course_name" type="VARCHAR(255)"/>
+            <column name="user_name" type="VARCHAR(255)"/>
         </createTable>
           <rollback>
-        <dropTable tableName="course"/>
+        <dropTable tableName="user_notification"/>
     </rollback>
     </changeSet>
 </databaseChangeLog>

@@ -1,0 +1,27 @@
+package com.project.registration_system.components.user.dtos;
+
+
+public class UserNotificationsDto {
+
+    private String course_name;
+    private Long user_id;
+    
+    public String getCourse_name() {
+        return course_name;
+    }
+
+    public void setCourse_name(String course_name) {
+        this.course_name = course_name;
+    }
+
+    public Long getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
+    }
+    public boolean isValid(){
+        return course_name !=null && user_id != null;
+    }
+}

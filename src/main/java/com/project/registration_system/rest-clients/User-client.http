@@ -1,11 +1,11 @@
-POST http://localhost:8080/api/v1/user 
+POST http://localhost:8082/api/v1/user 
 Content-Type: application/vnd.api+json
 
 {
   "data": {
     "type": "user",
     "attributes": {
-      "name": "yazeedj@gmail",
+      "name": "yazeded@gmail",
       "password": "password"
     }
   }
@@ -15,22 +15,22 @@ Content-Type: application/vnd.api+json
 GET http://localhost:8080/api/v1/user
 
 ###
-POST http://localhost:8080/api/v1/private/create-user
+POST http://localhost:8082/api/v1/private/create-user
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5YXplZWRqQGdtYWlsIiwiaWF0IjoxNzUwMTY4OTYyLCJleHAiOjE3NTAxNzI1NjJ9.7wUngzD8TW1znqRUbISHLvXh_QvHrQPqVdrWKFSID7A
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5YXplZGVkQGdtYWlsIiwiaWF0IjoxNzUwNTk4MjE5LCJleHAiOjE3NTA2MDE4MTl9.zv9LVpOoJbse1FwYwCnAPVSqnuvJtVpPp8EHy-U7YS0
 
 {
-  "name":"fa",
-  "password":"mohammad",
-  "courseCode":"swssjoid",
-  "courseName":"pwokd"
+  "name":"mohammad",
+  "password":"Mohammad",
+  "courseName":"construction lab" ,
+  "courseCode":"444"
 }
 ###
-POST http://localhost:8080/api/v1/login
+POST http://localhost:8082/api/v1/login
 Content-Type: application/json
 
 {
-  "name":"yazeedj@gmail",
+  "name":"yazeded@gmail",
   "password":"password"
 }
 

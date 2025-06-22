@@ -1,17 +1,10 @@
-package com.project.registration_system.dtos;
-
+package com.project.registration_system.components.user.dtos;
 public class MessageDto {
         private String courseCode;
         private String courseName;
         private Long userId;
 
         public MessageDto(){}
-
-        public MessageDto(String courseCode, String courseName, Long userId){
-            this.courseCode= courseCode;
-            this.courseName=courseName;
-            this.userId=userId;
-        }
 
         public String getCourseCode() {
             return courseCode;

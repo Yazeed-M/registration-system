@@ -17,13 +17,13 @@ public class UserController{
     
     @Autowired
     private final UserService userService;
-    public UserController(com.project.registration_system.components.user.services.UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @PostMapping(path ="private/create-user")
     public void createStudent(@RequestBody() CreateStudentDto createStudentDto){
-        this.userService.createStudent(createStudentDto.getName(),createStudentDto.getPassword(), createStudentDto.getCourseName(), createStudentDto.getCourseCode());
+        this.userService.createStudent(createStudentDto);
     }
     
     @PostMapping(path = "login")
