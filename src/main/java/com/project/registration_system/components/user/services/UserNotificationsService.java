@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.registration_system.components.user.dtos.MessageDto;
 import com.project.registration_system.components.user.dtos.UserNotificationsDto;
 import com.project.registration_system.components.user.entities.User;
 import com.project.registration_system.components.user.entities.User_Notification;
